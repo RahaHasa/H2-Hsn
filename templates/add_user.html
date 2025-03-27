@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Add New User</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="POST" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" name="phone" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="user_type" class="form-label">User Type</label>
+                <select class="form-select" id="user_type" name="user_type" required>
+                    <option value="">Select user type</option>
+                    <option value="driver">Driver</option>
+                    <option value="passenger">Passenger</option>
+                </select>
+            </div>
+
+            <div class="mb-3" id="vehicle_number_group" style="display: none;">
+                <label for="vehicle_number" class="form-label">Vehicle Number</label>
+                <input type="text" class="form-control" id="vehicle_number" name="vehicle_number" 
+                       pattern="[A-Z]{2}\s\d{3}\s[A-Z]{3}\s\d{2}" 
+                       placeholder="Format: KZ 001 AAA 01">
+                <div class="form-text">Format: KZ 001 AAA 01</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add User</button>
+        </form>
+    </div>
+</div>
+
+<script>
+document.getElementById('user_type').addEventListener('change', function() {
+    const vehicleNumberGroup = document.getElementById('vehicle_number_group');
+    const vehicleNumberInput = document.getElementById('vehicle_number');
+    
+    if (this.value === 'driver') {
+        vehicleNumberGroup.style.display = 'block';
+        vehicleNumberInput.required = true;
+    } else {
+        vehicleNumberGroup.style.display = 'none';
+        vehicleNumberInput.required = false;
+    }
+});
+</script>
+{% endblock %} 

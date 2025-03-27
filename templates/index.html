@@ -27,7 +27,16 @@
             <tr>
                 <td>{{ user.id }}</td>
                 <td>{{ user.name }}</td>
-                <td>{{ user.phone }}</td>
+                <td>
+                    {{ user.phone }}
+                    <a href="https://wa.me/{{ user.phone.replace(' ', '').replace('-', '').replace('+', '') }}" 
+                       target="_blank" 
+                       class="whatsapp-link">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/479px-WhatsApp.svg.png" 
+                             alt="WhatsApp" 
+                             class="whatsapp-icon">
+                    </a>
+                </td>
                 <td>{{ user.user_type.title() }}</td>
                 <td>{{ user.vehicle_number or '-' }}</td>
                 <td>{{ user.created_at.strftime('%Y-%m-%d %H:%M') }}</td>

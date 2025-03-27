@@ -26,4 +26,19 @@ body {
 
 .alert {
     margin-bottom: 1rem;
+}
+
+.whatsapp-icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+.whatsapp-link {
+    text-decoration: none;
+}
+
+.whatsapp-link:hover {
+    opacity: 0.8;
 } 

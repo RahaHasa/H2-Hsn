@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Сделать скидку</h1>
+<form method="post" action="/apply_discount">
+    <label for="custom_discount">Процент скидки:</label>
+    <input type="number" id="custom_discount" name="custom_discount" class="form-control" min="0" max="100" required>
+    <br>
+    <label for="reason">Причина скидки:</label>
+    <select id="reason" name="reason" class="form-select" required>
+        <option value="long_wait">Длительное ожидание водителя</option>
+        <option value="driver_cancellation">Отмена поездки водителем</option>
+        <option value="wrong_route">Неправильный маршрут</option>
+        <option value="payment_issue">Проблемы с оплатой через приложение</option>
+        <option value="rude_behavior">Невежливое поведение водителя</option>
+        <option value="safety_concern">Проблемы с безопасностью во время поездки</option>
+        <option value="ac_issue">Проблемы с кондиционером в автомобиле</option>
+        <option value="traffic_delay">Задержка из-за пробок</option>
+        <option value="baggage_issue">Проблемы с багажом</option>
+        <option value="booking_issue">Проблемы с бронированием</option>
+    </select>
+    <br>
+    <label for="start_date">Дата начала скидки:</label>
+    <input type="datetime-local" id="start_date" name="start_date" class="form-control" required>
+    <br>
+    <label for="end_date">Дата окончания скидки:</label>
+    <input type="datetime-local" id="end_date" name="end_date" class="form-control" required>
+    <br>
+    <button type="submit">Применить</button>
+</form>
+{% endblock %} 

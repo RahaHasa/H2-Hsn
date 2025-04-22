@@ -1,54 +1,67 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Add New User</h1>
-
-<div class="row">
-    <div class="col-md-6">
-        <form method="POST" class="needs-validation" novalidate>
-            <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="phone" class="form-label">Phone Number</label>
-                <input type="tel" class="form-control" id="phone" name="phone" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="user_type" class="form-label">User Type</label>
-                <select class="form-select" id="user_type" name="user_type" required>
-                    <option value="">Select user type</option>
-                    <option value="driver">Driver</option>
-                    <option value="passenger">Passenger</option>
-                </select>
-            </div>
-
-            <div class="mb-3" id="vehicle_number_group" style="display: none;">
-                <label for="vehicle_number" class="form-label">Vehicle Number</label>
-                <input type="text" class="form-control" id="vehicle_number" name="vehicle_number" 
-                       pattern="[A-Z]{2}\s\d{3}\s[A-Z]{3}\s\d{2}" 
-                       placeholder="Format: KZ 001 AAA 01">
-                <div class="form-text">Format: KZ 001 AAA 01</div>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Add User</button>
-        </form>
+<h1>Добавить нового пользователя</h1>
+<form method="post" action="/add_user" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <div class="mb-3">
+        <label for="first_name" class="form-label">Имя:</label>
+        <input type="text" id="first_name" name="first_name" class="form-control" required>
     </div>
-</div>
+    <div class="mb-3">
+        <label for="last_name" class="form-label">Фамилия:</label>
+        <input type="text" id="last_name" name="last_name" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="middle_name" class="form-label">Отчество:</label>
+        <input type="text" id="middle_name" name="middle_name" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="phone" class="form-label">Телефон:</label>
+        <input type="text" id="phone" name="phone" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="user_type" class="form-label">Тип:</label>
+        <select id="user_type" name="user_type" class="form-select" required>
+            <option value="passenger">Пассажир</option>
+            <option value="driver">Водитель</option>
+        </select>
+    </div>
+    <div class="mb-3" id="vehicle_number_group" style="display: none;">
+        <label for="vehicle_number" class="form-label">Номер машины:</label>
+        <input type="text" id="vehicle_number" name="vehicle_number" class="form-control">
+    </div>
+    <div class="mb-3" id="car_brand_group" style="display: none;">
+        <label for="car_brand" class="form-label">Марка машины:</label>
+        <input type="text" id="car_brand" name="car_brand" class="form-control">
+    </div>
+    <div class="mb-3" id="car_color_group" style="display: none;">
+        <label for="car_color" class="form-label">Цвет машины:</label>
+        <input type="text" id="car_color" name="car_color" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="photo" class="form-label">Фото:</label>
+        <input type="file" id="photo" name="photo" class="form-control" accept="image/*">
+    </div>
+    <div class="mb-3">
+        <label for="discount" class="form-label">Скидка:</label>
+        <input type="number" id="discount" name="discount" class="form-control" placeholder="10">
+    </div>
+    <button type="submit" class="btn btn-primary">Добавить</button>
+</form>
 
 <script>
 document.getElementById('user_type').addEventListener('change', function() {
     const vehicleNumberGroup = document.getElementById('vehicle_number_group');
-    const vehicleNumberInput = document.getElementById('vehicle_number');
-    
+    const carBrandGroup = document.getElementById('car_brand_group');
+    const carColorGroup = document.getElementById('car_color_group');
     if (this.value === 'driver') {
         vehicleNumberGroup.style.display = 'block';
-        vehicleNumberInput.required = true;
+        carBrandGroup.style.display = 'block';
+        carColorGroup.style.display = 'block';
     } else {
         vehicleNumberGroup.style.display = 'none';
-        vehicleNumberInput.required = false;
+        carBrandGroup.style.display = 'none';
+        carColorGroup.style.display = 'none';
     }
 });
 </script>

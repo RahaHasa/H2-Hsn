@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Редактировать пользователя</h1>
+<form method="post" action="/edit_user/{{ user.id }}" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <div class="mb-3">
+        <label for="first_name" class="form-label">Имя:</label>
+        <input type="text" id="first_name" name="first_name" class="form-control" value="{{ user.first_name }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="last_name" class="form-label">Фамилия:</label>
+        <input type="text" id="last_name" name="last_name" class="form-control" value="{{ user.last_name }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="middle_name" class="form-label">Отчество:</label>
+        <input type="text" id="middle_name" name="middle_name" class="form-control" value="{{ user.middle_name }}">
+    </div>
+    <div class="mb-3">
+        <label for="phone" class="form-label">Телефон:</label>
+        <input type="text" id="phone" name="phone" class="form-control" value="{{ user.phone }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="user_type" class="form-label">Тип:</label>
+        <select id="user_type" name="user_type" class="form-select" required>
+            <option value="driver" {% if user.user_type == 'driver' %}selected{% endif %}>Водитель</option>
+            <option value="passenger" {% if user.user_type == 'passenger' %}selected{% endif %}>Пассажир</option>
+        </select>
+    </div>
+    <div class="mb-3" id="vehicle_number_group" style="display: {% if user.user_type == 'driver' %}block{% else %}none{% endif %};">
+        <label for="vehicle_number" class="form-label">Номер машины:</label>
+        <input type="text" id="vehicle_number" name="vehicle_number" class="form-control" value="{{ user.vehicle_number }}" placeholder="KZ 001 AAA 01">
+    </div>
+    <div class="mb-3" id="car_brand_group" style="display: {% if user.user_type == 'driver' %}block{% else %}none{% endif %};">
+        <label for="car_brand" class="form-label">Марка машины:</label>
+        <input type="text" id="car_brand" name="car_brand" class="form-control" value="{{ user.car_brand }}">
+    </div>
+    <div class="mb-3" id="car_color_group" style="display: {% if user.user_type == 'driver' %}block{% else %}none{% endif %};">
+        <label for="car_color" class="form-label">Цвет машины:</label>
+        <input type="text" id="car_color" name="car_color" class="form-control" value="{{ user.car_color }}">
+    </div>
+    <div class="mb-3">
+        <label for="photo" class="form-label">Фото:</label>
+        <input type="file" id="photo" name="photo" class="form-control" accept="image/*">
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>
+
+<script>
+document.getElementById('user_type').addEventListener('change', function() {
+    const vehicleNumberGroup = document.getElementById('vehicle_number_group');
+    const carBrandGroup = document.getElementById('car_brand_group');
+    const carColorGroup = document.getElementById('car_color_group');
+    if (this.value === 'driver') {
+        vehicleNumberGroup.style.display = 'block';
+        carBrandGroup.style.display = 'block';
+        carColorGroup.style.display = 'block';
+    } else {
+        vehicleNumberGroup.style.display = 'none';
+        carBrandGroup.style.display = 'none';
+        carColorGroup.style.display = 'none';
+    }
+});
+</script>
+{% endblock %} 

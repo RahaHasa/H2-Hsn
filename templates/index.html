@@ -1,25 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>User Management</h1>
+<h1>Управление пользователями</h1>
 
-<div class="row mb-4">
-    <div class="col">
-        <h2>All Users</h2>
-    </div>
+<div class="btn-group mb-3" role="group">
+    <button type="button" class="btn btn-primary" onclick="filterUsers('all')">Все</button>
+    <button type="button" class="btn btn-secondary" onclick="filterUsers('driver')">Водители</button>
+    <button type="button" class="btn btn-secondary" onclick="filterUsers('passenger')">Пассажиры</button>
 </div>
+
+<a href="{{ url_for('add_user') }}" class="btn btn-success mb-3">Добавить пользователя</a>
 
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Type</th>
-                <th>Vehicle Number</th>
-                <th>Created At</th>
-                <th>Actions</th>
+                <th>Имя</th>
+                <th>Телефон</th>
+                <th>Тип</th>
+                <th>Номер машины</th>
+                <th>Скидка</th>
+                <th>Бонусы</th>
+                <th>Дата регистрации</th>
+                <th>Действия</th>
             </tr>
         </thead>
         <tbody>
@@ -27,29 +31,34 @@
             <tr>
                 <td>{{ user.id }}</td>
                 <td>{{ user.name }}</td>
-                <td>
-                    {{ user.phone }}
-                    <a href="https://wa.me/{{ user.phone.replace(' ', '').replace('-', '').replace('+', '') }}" 
-                       target="_blank" 
-                       class="whatsapp-link">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/479px-WhatsApp.svg.png" 
-                             alt="WhatsApp" 
-                             class="whatsapp-icon">
-                    </a>
-                </td>
-                <td>{{ user.user_type.title() }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{{ user.user_type }}</td>
                 <td>{{ user.vehicle_number or '-' }}</td>
-                <td>{{ user.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>{{ user.discount or 'Нет скидки' }}</td>
+                <td>{{ user.bonuses or '-' }}</td>
+                <td>{{ user.created_at.strftime('%d.%m.%Y %H:%M:%S') }}</td>
                 <td>
-                    <a href="{{ url_for('delete_user', id=user.id) }}" 
-                       class="btn btn-danger btn-sm"
-                       onclick="return confirm('Are you sure you want to delete this user?')">
-                        Delete
-                    </a>
+                    <a href="/edit_user/{{ user.id }}" class="btn btn-primary">Редактировать</a>
+                    <a href="/apply_discount/{{ user.id }}" class="btn btn-info">Скидка</a>
+                    <a href="/delete_user/{{ user.id }}" class="btn btn-danger">Удалить</a>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
+
+<script>
+function filterUsers(type) {
+    const rows = document.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+        const userType = row.querySelector('td:nth-child(4)').textContent.trim();
+        if (type === 'all' || userType.toLowerCase() === type) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
+</script>
 {% endblock %} 
